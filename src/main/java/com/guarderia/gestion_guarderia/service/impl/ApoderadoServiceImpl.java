@@ -1,16 +1,14 @@
 package com.guarderia.gestion_guarderia.service.impl;
 
 import com.guarderia.gestion_guarderia.dto.ApoderadoDTO;
-import com.guarderia.gestion_guarderia.dto.ParvuloDTO;
 import com.guarderia.gestion_guarderia.entities.Apoderado;
 import com.guarderia.gestion_guarderia.entities.Parvulo;
-import com.guarderia.gestion_guarderia.entities.Rol;
+import com.guarderia.gestion_guarderia.utils.enums.Rol;
 import com.guarderia.gestion_guarderia.exception.InternalServerErrorExeption;
 import com.guarderia.gestion_guarderia.exception.NotFoundExeption;
 import com.guarderia.gestion_guarderia.repository.ApoderadoRepository;
 import com.guarderia.gestion_guarderia.repository.ParvuloRepository;
 import com.guarderia.gestion_guarderia.service.ApoderadoService;
-import com.guarderia.gestion_guarderia.service.ParvuloService;
 import com.guarderia.gestion_guarderia.utils.PasswordGenerator;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;

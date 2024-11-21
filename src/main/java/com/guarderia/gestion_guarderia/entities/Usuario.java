@@ -1,11 +1,12 @@
 package com.guarderia.gestion_guarderia.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.guarderia.gestion_guarderia.utils.enums.Rol;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.List;
 
 
 @Entity
@@ -35,7 +36,9 @@ public abstract class Usuario {
     private String password;
 
     @Enumerated(EnumType.STRING)
-
     private Rol rol;
+
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    private List<Token> tokens;
 
 }

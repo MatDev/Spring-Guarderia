@@ -2,7 +2,7 @@ package com.guarderia.gestion_guarderia.service.impl;
 
 import com.guarderia.gestion_guarderia.dto.AsistenteParvuloDTO;
 import com.guarderia.gestion_guarderia.entities.AsistenteParvulo;
-import com.guarderia.gestion_guarderia.entities.Rol;
+import com.guarderia.gestion_guarderia.utils.enums.Rol;
 import com.guarderia.gestion_guarderia.exception.InternalServerErrorExeption;
 import com.guarderia.gestion_guarderia.exception.NotFoundExeption;
 import com.guarderia.gestion_guarderia.repository.AsistenteParvuloRepository;

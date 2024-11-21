@@ -1,4 +1,4 @@
-package com.guarderia.gestion_guarderia.entities;
+package com.guarderia.gestion_guarderia.utils.enums;
 
 public enum Rol {
     PARVULARIA,
