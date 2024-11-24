@@ -48,8 +48,7 @@ public class AsistenteParvuloService {
 
 public interface AsistenteParvuloService {
 
-    @Transactional
-    AsistenteParvuloDTO createAsistenteParvulo(@NonNull AsistenteParvuloDTO asistenteParvuloDTO);
+
 
     @Transactional
     AsistenteParvuloDTO updateAsistenteParvulo(@NonNull Long id, AsistenteParvuloDTO asistenteParvuloDTO);

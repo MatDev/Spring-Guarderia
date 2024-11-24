@@ -30,21 +30,7 @@ public class ParvuloController {
         return ResponseEntity.ok(parvuloDTOList);
     }
 
-    @PostMapping
-    public ResponseEntity<ParvuloDTO> createParvulo(@NonNull @Valid @RequestBody final ParvuloDTO parvuloDTO){
-        LOGGER.info("Creando parvulo");
-       try {
 
-           ParvuloDTO parvuloDTO1=parvuloService.createParvulo(parvuloDTO);
-           LOGGER.info("Parvulo creado con id {}", parvuloDTO1.getId());
-
-           return ResponseEntity.status(HttpStatus.CREATED).body(parvuloDTO1);
-
-       } catch (IllegalArgumentException e) {
-           LOGGER.warn("Datos de parvulos invalidos {}",e.getMessage() );
-              return ResponseEntity.badRequest().build();
-       }
-    }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<ParvuloDTO> getParvuloById(@NonNull @PathVariable Long id){

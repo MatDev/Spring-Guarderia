@@ -12,8 +12,7 @@ import java.util.List;
 
 
 public interface ParvulariaService {
-    @Transactional
-    ParvulariaDTO createParvularia(@NonNull  ParvulariaDTO parvulariaDTO);
+
     @Transactional
     ParvulariaDTO updateParvularia(@NonNull Long id, @NonNull ParvulariaDTO parvulariaDTO);
 

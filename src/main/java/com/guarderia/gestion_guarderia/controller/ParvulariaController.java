@@ -22,19 +22,6 @@ public class ParvulariaController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ParvulariaController.class);
     private final ParvulariaService parvulariaService;
 
-    @PostMapping
-    public ResponseEntity<ParvulariaDTO> createParvularia(@NonNull @Valid @RequestBody final ParvulariaDTO parvulariaDTO){
-        LOGGER.info("Request recibida para crear parvularia");
-        try {
-
-            ParvulariaDTO parvulariaDTO1=parvulariaService.createParvularia(parvulariaDTO);
-            LOGGER.info("Parvularia creada con id {} ", parvulariaDTO1.getId());
-            return ResponseEntity.status(HttpStatus.CREATED).body(parvulariaDTO1);
-        }catch (IllegalArgumentException e){
-            LOGGER.warn("Datos de parvularia invalidos {}",e.getMessage() );
-            return ResponseEntity.badRequest().build();
-        }
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<ParvulariaDTO> updateParvularia(@NonNull @PathVariable Long id, @NonNull @Valid @RequestBody final ParvulariaDTO parvulariaDTO){

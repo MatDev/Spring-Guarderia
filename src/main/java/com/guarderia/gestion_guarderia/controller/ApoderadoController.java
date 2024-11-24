@@ -24,18 +24,8 @@ public class ApoderadoController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApoderadoController.class);
     private final ApoderadoService apoderadoService;
 
-    @PostMapping("/create")
-    public ResponseEntity<ApoderadoDTO> createApoderado(@NonNull @Valid @RequestBody final ApoderadoDTO apoderadoDTO){
-        LOGGER.info("Request recibida para crear apoderado");
-        try {
-            ApoderadoDTO apoderadoDTO1=apoderadoService.createApoderado(apoderadoDTO);
-            LOGGER.info("Apoderado creado con id {}", apoderadoDTO1.getId());
-            return ResponseEntity.status(HttpStatus.CREATED).body(apoderadoDTO1);
-        }catch (IllegalArgumentException e){
-            LOGGER.warn("Datos de apoderado invalidos {}",e.getMessage() );
-            return ResponseEntity.badRequest().build();
-        }
-    }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<ApoderadoDTO> updateApoderado(@NonNull @PathVariable Long id, @NonNull @Valid @RequestBody final ApoderadoDTO apoderadoDTO){

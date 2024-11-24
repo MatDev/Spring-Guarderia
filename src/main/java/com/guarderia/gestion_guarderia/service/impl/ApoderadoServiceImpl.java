@@ -29,25 +29,9 @@ public class ApoderadoServiceImpl implements ApoderadoService {
     private final ParvuloRepository parvuloRepository;
     private final ModelMapper modelMapper;
 
-    @Override
-    @Transactional
-    public ApoderadoDTO createApoderado(@NonNull ApoderadoDTO apoderadoDTO) {
-        LOGGER.info("Creando apoderado");
-        try {
-            Apoderado apoderado = convertToEntity(apoderadoDTO);
-            apoderado.setRol(Rol.APODERADO);
-            apoderado.setPassword(PasswordGenerator.generatePassword(apoderadoDTO.getNombre(), apoderadoDTO.getRut()));
-            apoderado = apoderadoRepository.save(apoderado);
-            LOGGER.info("Apoderado creado con id {}", apoderado.getId());
-            return convertToDto(apoderado);
 
-        } catch (Exception e) {
-            LOGGER.error("Error al crear apoderado");
-            throw new InternalServerErrorExeption("Error al crear apoderado");
 
-        }
 
-    }
 
     @Override
     @Transactional

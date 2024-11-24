@@ -22,18 +22,7 @@ public class AsistenteParvuloController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AsistenteParvuloController.class);
     private final AsistenteParvuloService asistenteParvuloService;
 
-    @PostMapping
-    public ResponseEntity<AsistenteParvuloDTO> createAsistenteParvulo(@NonNull @Valid @RequestBody final AsistenteParvuloDTO asistenteParvuloDTO){
-        LOGGER.info("Request recibida para crear asistente parvulo");
-        try {
-            AsistenteParvuloDTO asistenteParvuloDTO1=asistenteParvuloService.createAsistenteParvulo(asistenteParvuloDTO);
-            LOGGER.info("Asistente parvulo creado con id {}", asistenteParvuloDTO1.getId());
-            return ResponseEntity.status(HttpStatus.CREATED).body(asistenteParvuloDTO1);
-        }catch (IllegalArgumentException e){
-            LOGGER.warn("Datos de asistente parvulo invalidos {}",e.getMessage() );
-            return ResponseEntity.badRequest().build();
-        }
-    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<AsistenteParvuloDTO> updateAsistenteParvulo(@NonNull @PathVariable Long id,@NonNull @Valid @RequestBody final AsistenteParvuloDTO asistenteParvuloDTO){

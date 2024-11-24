@@ -27,24 +27,7 @@ public class AsistenteParvuloServiceImpl implements AsistenteParvuloService {
     private final ModelMapper modelMapper;
 
 
-    @Override
-    @Transactional
-    public AsistenteParvuloDTO createAsistenteParvulo(@NonNull AsistenteParvuloDTO asistenteParvuloDTO) {
-        LOGGER.info("Creando asistente parvulo");
-        try {
-            AsistenteParvulo asistenteParvulo = convertToEntity(asistenteParvuloDTO);
-            asistenteParvulo.setRol(Rol.ASISTENTE_PARVULO);
-            asistenteParvulo.setPassword(PasswordGenerator.generatePassword(asistenteParvuloDTO.getNombre(),asistenteParvuloDTO.getRut()));
-            asistenteParvulo = asistenteParvuloRepository.save(asistenteParvulo);
-            LOGGER.info("Asistente parvulo creado con id {}", asistenteParvulo.getId());
-            return convertToDto(asistenteParvulo);
 
-        } catch (Exception e) {
-            LOGGER.error("Error al crear asistente parvulo");
-            throw new NotFoundExeption("Error al crear asistente parvulo");
-
-        }
-    }
 
     @Override
     @Transactional

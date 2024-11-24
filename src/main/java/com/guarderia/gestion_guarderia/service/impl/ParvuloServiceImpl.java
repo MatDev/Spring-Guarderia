@@ -29,23 +29,7 @@ public class ParvuloServiceImpl implements ParvuloService {
     private final ModelMapper modelMapper;
     private final ParvulariaService parvulariaService;
 
-    @Override
-    @Transactional
-    public ParvuloDTO createParvulo(@NonNull ParvuloDTO parvuloDTO) {
-        LOGGER.info("Creando parvulo {}", parvuloDTO);
-        Parvulo parvulo = convertToEntity(parvuloDTO);
-        ParvulariaDTO parvularia = parvulariaService.getParvulariaById(parvuloDTO.getParvularia().getId());
-        parvulo.setParvularia(modelMapper.map(parvularia, Parvularia.class));
 
-        try {
-            parvulo = parvuloRepository.save(parvulo);
-            LOGGER.info("Parvulo creado con id {}",parvulo.getId());
-            return convertToDto(parvulo);
-        } catch (Exception e) {
-            LOGGER.error("Error al crear parvulo {}", e.getMessage());
-            throw new InternalServerErrorExeption("Error al crear parvulo");
-        }
-    }
 
     @Override
     @Transactional

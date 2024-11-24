@@ -10,8 +10,7 @@ import java.util.List;
 public interface ApoderadoService {
 
 
-    @Transactional
-    ApoderadoDTO createApoderado(@NonNull ApoderadoDTO apoderadoDTO);
+
 
     @Transactional
     ApoderadoDTO updateApoderado(@NonNull Long id, @NonNull ApoderadoDTO apoderadoDTO);
