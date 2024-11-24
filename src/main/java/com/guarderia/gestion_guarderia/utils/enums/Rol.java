@@ -1,13 +1,12 @@
 package com.guarderia.gestion_guarderia.utils.enums;
 
-import com.guarderia.gestion_guarderia.entities.Parvularia;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,7 +42,10 @@ PARVULARIA(Set.of(Permission.values())),
 
     @Getter
     private final Set<Permission> permissions;
+   /* Se obtienen los permisos de cada rol.
+   Se devuelve una lista de permisos con el prefijo "ROLE_" para que Spring Security pueda reconocerlo como un rol.
 
+   */
     public List<SimpleGrantedAuthority> getAuthorities() {
         var authorities = permissions.stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
@@ -51,9 +53,6 @@ PARVULARIA(Set.of(Permission.values())),
         authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
         return authorities;
     }
-
-
-
 
 
 
