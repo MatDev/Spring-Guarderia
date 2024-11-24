@@ -14,5 +14,6 @@ public class ApiConstantEndpoint {
     public static final String API_ACTIVIDAD = API_VERSION + "/actividad";
     public static final String API_ASISTENCIA = API_VERSION + "/asistencia";
     public static final String API_FOTO = API_VERSION + "/foto";
+    public static final String API_USER = API_VERSION + "/user";
 
 }
