@@ -7,6 +7,7 @@ import com.guarderia.gestion_guarderia.dto.ParvulariaDTO;
 import com.guarderia.gestion_guarderia.dto.ParvuloDTO;
 import com.guarderia.gestion_guarderia.service.UserService;
 import com.guarderia.gestion_guarderia.utils.constant.ApiConstantEndpoint;
+import com.guarderia.gestion_guarderia.utils.constant.RoleConstant;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,7 @@ public class UserController {
 
 
     @PostMapping("/create/parvulo")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ParvuloDTO> createParvulo(@NonNull @Valid @RequestBody final ParvuloDTO parvuloDTO){
         LOGGER.info("Request recibida para crear parvulo");
         try {
@@ -45,6 +48,7 @@ public class UserController {
 
 
     @PostMapping("/create/asistente")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<AsistenteParvuloDTO> createAsistenteParvulo(@NonNull @Valid @RequestBody final AsistenteParvuloDTO asistenteParvuloDTO){
         LOGGER.info("Request recibida para crear asistente parvulo");
         try {
@@ -58,6 +62,7 @@ public class UserController {
     }
 
     @PostMapping("/create/parvularia")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ParvulariaDTO> createParvularia(@NonNull @Valid @RequestBody final ParvulariaDTO parvulariaDTO){
         LOGGER.info("Request recibida para crear parvularia");
         try {
@@ -71,6 +76,7 @@ public class UserController {
         }
     }
     @PostMapping("/create/apoderado")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ApoderadoDTO> createApoderado(@NonNull @Valid @RequestBody final ApoderadoDTO apoderadoDTO){
         LOGGER.info("Request recibida para crear apoderado");
         try {

@@ -6,6 +6,7 @@ import com.guarderia.gestion_guarderia.exception.NotFoundExeption;
 import com.guarderia.gestion_guarderia.service.ApoderadoService;
 import com.guarderia.gestion_guarderia.service.ParvuloService;
 import com.guarderia.gestion_guarderia.utils.constant.ApiConstantEndpoint;
+import com.guarderia.gestion_guarderia.utils.constant.RoleConstant;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class ApoderadoController {
 
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ApoderadoDTO> updateApoderado(@NonNull @PathVariable Long id, @NonNull @Valid @RequestBody final ApoderadoDTO apoderadoDTO){
         LOGGER.info("Request recibida con id {}", id);
         try {
@@ -41,6 +44,7 @@ public class ApoderadoController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<Void> deleteApoderado(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para eliminar apoderado por id {}", id);
         try {
@@ -54,6 +58,7 @@ public class ApoderadoController {
     }
 
     @GetMapping("/id/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ApoderadoDTO> getApoderadoById(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para obtener apoderado por id {}", id);
         try {
@@ -66,6 +71,7 @@ public class ApoderadoController {
     }
 
     @GetMapping("/rut/{rut}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ApoderadoDTO> getApoderadoByRut(@NonNull @PathVariable String rut){
         LOGGER.info("Request recibida para obtener apoderado por rut {}", rut);
         try {
@@ -78,6 +84,7 @@ public class ApoderadoController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<ApoderadoDTO>> getApoderados(){
         LOGGER.info("Request recibida para obtener todos los apoderados");
         try {

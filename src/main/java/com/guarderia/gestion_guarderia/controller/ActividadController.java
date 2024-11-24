@@ -4,6 +4,7 @@ import com.guarderia.gestion_guarderia.dto.ActividadDTO;
 import com.guarderia.gestion_guarderia.exception.NotFoundExeption;
 import com.guarderia.gestion_guarderia.service.ActividadService;
 import com.guarderia.gestion_guarderia.utils.constant.ApiConstantEndpoint;
+import com.guarderia.gestion_guarderia.utils.constant.RoleConstant;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class ActividadController {
     private final ActividadService actividadService;
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ActividadDTO> createActividad(@NonNull @Valid @RequestBody final ActividadDTO actividadDTO){
         LOGGER.info("Request recibida para crear actividad");
         try {
@@ -35,6 +38,7 @@ public class ActividadController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ActividadDTO> updateActividad(@NonNull @PathVariable Long id, @NonNull @Valid @RequestBody final ActividadDTO actividadDTO){
         LOGGER.info("Reuquest recibida para actualizar actividad con id {}", id);
         try {
@@ -48,6 +52,7 @@ public class ActividadController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<Void> deleteActividad(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para eliminar actividad por id {}", id);
         try {
@@ -61,6 +66,7 @@ public class ActividadController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ActividadDTO> getActividadById(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para buscar actividad por id {}", id);
         try {
@@ -73,6 +79,7 @@ public class ActividadController {
     }
 
     @GetMapping("/encargado/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<ActividadDTO>> getActividadByEncargado(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para buscar actividad por encargado {}", id);
         try {
@@ -85,6 +92,7 @@ public class ActividadController {
     }
 
     @GetMapping("/creador/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<ActividadDTO>> getActividadByCreador(@NonNull @PathVariable Long id){
         LOGGER.info("Obteniendo actividad por creador {}", id);
         try {
@@ -97,6 +105,7 @@ public class ActividadController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<ActividadDTO>> getAllActividades(){
         LOGGER.info("Obteniendo todas las actividades");
         List<ActividadDTO> actividadDTOS=actividadService.getAllActividades();
@@ -104,6 +113,7 @@ public class ActividadController {
     }
 
     @GetMapping("/ayudantes/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<ActividadDTO>> getActividadByAyudantes(@NonNull @PathVariable Long id){
         LOGGER.info("Obteniendo actividad por ayudantes {}", id);
         try {

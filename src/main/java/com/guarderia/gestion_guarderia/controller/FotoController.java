@@ -2,6 +2,7 @@ package com.guarderia.gestion_guarderia.controller;
 import com.guarderia.gestion_guarderia.dto.FotoDTO;
 import com.guarderia.gestion_guarderia.service.FotoService;
 import com.guarderia.gestion_guarderia.utils.constant.ApiConstantEndpoint;
+import com.guarderia.gestion_guarderia.utils.constant.RoleConstant;
 import lombok.AllArgsConstructor;
 
 import lombok.NonNull;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
@@ -29,6 +31,7 @@ public class FotoController {
     private final FotoService fotoService;
 
     @PostMapping("/actividad/{actividadId}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<FotoDTO> uploadFoto(@PathVariable @NonNull Long actividadId, @RequestParam("file")MultipartFile file){
         LOGGER.info("Request recibida para subir foto");
         try {
@@ -43,6 +46,7 @@ public class FotoController {
     }
 
     @GetMapping("/actividad/{actividadId}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<Resource>> getFotosByActividad(@PathVariable Long actividadId) {
         try {
             List<Resource> resources = fotoService.getFotosByActividadIdResource(actividadId);
@@ -56,6 +60,7 @@ public class FotoController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<Void> deleteFoto(@PathVariable Long id) {
         try {
             fotoService.deleteFoto(id);

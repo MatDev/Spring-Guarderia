@@ -4,6 +4,7 @@ import com.guarderia.gestion_guarderia.dto.AsistenteParvuloDTO;
 import com.guarderia.gestion_guarderia.exception.NotFoundExeption;
 import com.guarderia.gestion_guarderia.service.AsistenteParvuloService;
 import com.guarderia.gestion_guarderia.utils.constant.ApiConstantEndpoint;
+import com.guarderia.gestion_guarderia.utils.constant.RoleConstant;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class AsistenteParvuloController {
 
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<AsistenteParvuloDTO> updateAsistenteParvulo(@NonNull @PathVariable Long id,@NonNull @Valid @RequestBody final AsistenteParvuloDTO asistenteParvuloDTO){
         LOGGER.info("Request recibida para actualizar asistente de parvulo con id {}", id);
         try {
@@ -38,6 +41,7 @@ public class AsistenteParvuloController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<Void> deleteAsistenteParvulo(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para eliminar asistente parvulo por id {}", id);
         try {
@@ -51,6 +55,7 @@ public class AsistenteParvuloController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<AsistenteParvuloDTO> getAsistenteParvuloById(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para obtener asistente parvulo por id {}", id);
         try {
@@ -63,6 +68,7 @@ public class AsistenteParvuloController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<AsistenteParvuloDTO>> getAllAsistenteParvulo(){
         LOGGER.info("Request recibida para obtener todos los asistentes de párvulos");
         try {

@@ -5,6 +5,7 @@ import com.guarderia.gestion_guarderia.dto.ParvuloDTO;
 import com.guarderia.gestion_guarderia.exception.NotFoundExeption;
 import com.guarderia.gestion_guarderia.service.ParvuloService;
 import com.guarderia.gestion_guarderia.utils.constant.ApiConstantEndpoint;
+import com.guarderia.gestion_guarderia.utils.constant.RoleConstant;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class ParvuloController {
     private final ParvuloService parvuloService;
 
     @GetMapping
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<ParvuloDTO>> getAllParvulos(){
         LOGGER.info("Reques recibida para obtener todos los parvulos");
         List<ParvuloDTO> parvuloDTOList=parvuloService.getAllParvulos();
@@ -33,6 +36,7 @@ public class ParvuloController {
 
 
     @GetMapping("/id/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ParvuloDTO> getParvuloById(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para obtener parvulo por id {}", id);
         try {
@@ -45,6 +49,7 @@ public class ParvuloController {
     }
 
     @GetMapping("/rut/{rut}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ParvuloDTO> getParvuloByRut(@NonNull @PathVariable String rut){
         LOGGER.info("Request recibida para obtener parvulo por rut {}", rut);
         try {
@@ -57,6 +62,7 @@ public class ParvuloController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ParvuloDTO> updateParvulo(@NonNull @PathVariable Long id, @NonNull @Valid @RequestBody final ParvuloDTO parvuloDTO){
         LOGGER.info("Request recibida para actualizar parvulo con id {}", id);
         try {
@@ -69,6 +75,7 @@ public class ParvuloController {
         }
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<Void> deleteParvulo(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para eliminar parvulo por id {}", id);
         try {

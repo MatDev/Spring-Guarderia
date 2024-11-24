@@ -4,6 +4,7 @@ import com.guarderia.gestion_guarderia.dto.AsistenciaDTO;
 import com.guarderia.gestion_guarderia.dto.ParvuloDTO;
 import com.guarderia.gestion_guarderia.service.AsistenciaService;
 import com.guarderia.gestion_guarderia.utils.constant.ApiConstantEndpoint;
+import com.guarderia.gestion_guarderia.utils.constant.RoleConstant;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNullFields;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class AsistenciaController {
 
 
     @PostMapping("/actividad/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<AsistenciaDTO>> registrarAsistencia(@NonNull @PathVariable Long id , @NonNull @RequestBody List<AsistenciaDTO> asistenciaDTOList){
         LOGGER.info("Request recibida para registrar asistencia");
         try {
@@ -38,6 +41,7 @@ public class AsistenciaController {
     }
 
     @GetMapping("/actividad/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<AsistenciaDTO>> getAsistenciaByActividadId(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para buscar asistencia por id de actividad {}", id);
         try {
@@ -51,6 +55,7 @@ public class AsistenciaController {
 
     }
     @GetMapping("/parvulo/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<AsistenciaDTO>> getAsistenciaByParvuloId(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para buscar asistencia por id de parvulo {}", id);
         try {
@@ -65,6 +70,7 @@ public class AsistenciaController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<Void> deleteAsistencia(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para eliminar asistencia por id {}", id);
         try {
