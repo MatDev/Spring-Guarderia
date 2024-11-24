@@ -41,6 +41,7 @@ public class ActividadServiceImpl implements ActividadService{
         ).toList();
     }
     //Obtengo una actividad por id
+
     @Override
     public ActividadDTO getActividadById(@NonNull Long id){
         LOGGER.info("Buscando actividad por id {}", id);
