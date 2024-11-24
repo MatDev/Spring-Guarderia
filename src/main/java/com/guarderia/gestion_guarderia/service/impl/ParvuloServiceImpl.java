@@ -27,7 +27,7 @@ public class ParvuloServiceImpl implements ParvuloService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ParvuloServiceImpl.class);
     private final ParvuloRepository parvuloRepository;
     private final ModelMapper modelMapper;
-    private final ParvulariaService parvulariaService;
+
 
 
 
