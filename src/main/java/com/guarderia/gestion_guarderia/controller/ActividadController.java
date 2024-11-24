@@ -23,6 +23,10 @@ public class ActividadController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ActividadController.class);
     private final ActividadService actividadService;
 
+    /*
+    Crear actividades
+    Acccesos solo para parvularia puede crear
+     */
     @PostMapping("/create")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ActividadDTO> createActividad(@NonNull @Valid @RequestBody final ActividadDTO actividadDTO){
@@ -36,7 +40,10 @@ public class ActividadController {
             return ResponseEntity.badRequest().build();
         }
     }
-
+    /*
+    Actualizar actividades por id
+    Acceso solo para parvularia puede actualizar
+     */
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ActividadDTO> updateActividad(@NonNull @PathVariable Long id, @NonNull @Valid @RequestBody final ActividadDTO actividadDTO){
@@ -50,7 +57,10 @@ public class ActividadController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    /*
+    Eliminar actividades por id
+    Acceso solo para parvularia puede eliminar
+     */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<Void> deleteActividad(@NonNull @PathVariable Long id){
@@ -64,9 +74,12 @@ public class ActividadController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    /*
+    Obtener actividades por id
+    Acceso para parvularia y asistente parvulo
+     */
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<ActividadDTO> getActividadById(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para buscar actividad por id {}", id);
         try {
@@ -78,6 +91,10 @@ public class ActividadController {
         }
     }
 
+    /*
+    Listar actividades por encargado (solo parvularias son encargados)
+    Acceso solo para parvularia
+     */
     @GetMapping("/encargado/{id}")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<ActividadDTO>> getActividadByEncargado(@NonNull @PathVariable Long id){
@@ -90,7 +107,10 @@ public class ActividadController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    /*
+    Listar actividades por creador
+    Acceso solo para parvularia
+     */
     @GetMapping("/creador/{id}")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<List<ActividadDTO>> getActividadByCreador(@NonNull @PathVariable Long id){
@@ -103,17 +123,23 @@ public class ActividadController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    /*
+    Listar todas las actividades
+    Acceso para parvularia y asistente parvulo
+     */
     @GetMapping
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<List<ActividadDTO>> getAllActividades(){
         LOGGER.info("Obteniendo todas las actividades");
         List<ActividadDTO> actividadDTOS=actividadService.getAllActividades();
         return ResponseEntity.ok(actividadDTOS);
     }
-
+    /*
+    Listar actividades por ayudantes
+    Acceso para parvularia y asistente parvulo
+     */
     @GetMapping("/ayudantes/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<List<ActividadDTO>> getActividadByAyudantes(@NonNull @PathVariable Long id){
         LOGGER.info("Obteniendo actividad por ayudantes {}", id);
         try {

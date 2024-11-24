@@ -25,8 +25,13 @@ public class ParvuloController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ParvuloController.class);
     private final ParvuloService parvuloService;
 
+
+    /*
+    Listar todos los parvulos y asistentes de parvulo
+
+     */
     @GetMapping
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('"+RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<List<ParvuloDTO>> getAllParvulos(){
         LOGGER.info("Reques recibida para obtener todos los parvulos");
         List<ParvuloDTO> parvuloDTOList=parvuloService.getAllParvulos();
@@ -35,8 +40,13 @@ public class ParvuloController {
 
 
 
+    /*
+    Obtener parvulo por id
+    Acceso solo a parvularia y asistente de parvulo
+     */
+
     @GetMapping("/id/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('"+RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<ParvuloDTO> getParvuloById(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para obtener parvulo por id {}", id);
         try {
@@ -48,8 +58,13 @@ public class ParvuloController {
         }
     }
 
+    /*
+     obtener parvulo por rut
+        Acceso solo a parvularia y asistente de parvulo
+     */
+
     @GetMapping("/rut/{rut}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('"+RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<ParvuloDTO> getParvuloByRut(@NonNull @PathVariable String rut){
         LOGGER.info("Request recibida para obtener parvulo por rut {}", rut);
         try {
@@ -60,9 +75,12 @@ public class ParvuloController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    /*
+    Actualizar parvulo
+    Acceso solo a parvularia y apoderado
+     */
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.APODERADO + "')")
     public ResponseEntity<ParvuloDTO> updateParvulo(@NonNull @PathVariable Long id, @NonNull @Valid @RequestBody final ParvuloDTO parvuloDTO){
         LOGGER.info("Request recibida para actualizar parvulo con id {}", id);
         try {
@@ -74,6 +92,11 @@ public class ParvuloController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /*
+    Eliminar parvulo
+    Acceso solo a parvularia
+     */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<Void> deleteParvulo(@NonNull @PathVariable Long id){

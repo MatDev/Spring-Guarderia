@@ -26,7 +26,7 @@ public class ParvulariaController {
 
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') ")
     public ResponseEntity<ParvulariaDTO> updateParvularia(@NonNull @PathVariable Long id, @NonNull @Valid @RequestBody final ParvulariaDTO parvulariaDTO){
         LOGGER.info("Request recibida para actualizar parvularia con id {}", id);
         try {

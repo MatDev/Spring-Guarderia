@@ -28,7 +28,10 @@ public class UserController {
     private final UserService userService;
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-
+    /*
+    Crear parvulo
+    Acceso solo a parvularia
+     */
     @PostMapping("/create/parvulo")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ParvuloDTO> createParvulo(@NonNull @Valid @RequestBody final ParvuloDTO parvuloDTO){
@@ -46,7 +49,10 @@ public class UserController {
         }
     }
 
-
+    /*
+    Crear asistente parvulo
+    Acceso solo a parvularia
+     */
     @PostMapping("/create/asistente")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<AsistenteParvuloDTO> createAsistenteParvulo(@NonNull @Valid @RequestBody final AsistenteParvuloDTO asistenteParvuloDTO){
@@ -60,7 +66,10 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
-
+    /*
+    Crear parvularia
+    Acceso solo a parvularia
+     */
     @PostMapping("/create/parvularia")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ParvulariaDTO> createParvularia(@NonNull @Valid @RequestBody final ParvulariaDTO parvulariaDTO){
@@ -75,6 +84,12 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    /*
+    Crear apoderado
+    Acceso solo a parvularia
+
+     */
     @PostMapping("/create/apoderado")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<ApoderadoDTO> createApoderado(@NonNull @Valid @RequestBody final ApoderadoDTO apoderadoDTO){

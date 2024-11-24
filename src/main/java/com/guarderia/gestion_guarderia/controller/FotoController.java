@@ -30,8 +30,13 @@ public class FotoController {
     private static final Logger LOGGER = LoggerFactory.getLogger(FotoController.class);
     private final FotoService fotoService;
 
+
+    /*
+    Subir foto
+    Acceso solo a parvularia, asistente de parvulo
+     */
     @PostMapping("/actividad/{actividadId}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<FotoDTO> uploadFoto(@PathVariable @NonNull Long actividadId, @RequestParam("file")MultipartFile file){
         LOGGER.info("Request recibida para subir foto");
         try {
@@ -45,8 +50,14 @@ public class FotoController {
 
     }
 
+    /*
+    Obtener lista de fotos de una actividad
+    Acceso a parvularia, asistente de parvulo, apoderado
+     */
+
     @GetMapping("/actividad/{actividadId}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')" +
+            "or hasRole('"+ RoleConstant.APODERADO+"')" )
     public ResponseEntity<List<Resource>> getFotosByActividad(@PathVariable Long actividadId) {
         try {
             List<Resource> resources = fotoService.getFotosByActividadIdResource(actividadId);
@@ -59,8 +70,12 @@ public class FotoController {
     }
 
 
+    /*
+    Eliminar foto
+    Acceso solo a parvularia, asistente de parvulo
+     */
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<Void> deleteFoto(@PathVariable Long id) {
         try {
             fotoService.deleteFoto(id);

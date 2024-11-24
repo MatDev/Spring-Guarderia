@@ -25,9 +25,12 @@ public class AsistenteParvuloController {
     private final AsistenteParvuloService asistenteParvuloService;
 
 
-
+    /*
+     Actualizar asistente parvulo
+        Acceso solo a parvularia, asistente de parvulo
+     */
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('"+RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<AsistenteParvuloDTO> updateAsistenteParvulo(@NonNull @PathVariable Long id,@NonNull @Valid @RequestBody final AsistenteParvuloDTO asistenteParvuloDTO){
         LOGGER.info("Request recibida para actualizar asistente de parvulo con id {}", id);
         try {
@@ -39,7 +42,10 @@ public class AsistenteParvuloController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    /*
+    Eliminar asistente parvulo
+    Acceso solo a parvularia
+     */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<Void> deleteAsistenteParvulo(@NonNull @PathVariable Long id){
@@ -54,8 +60,12 @@ public class AsistenteParvuloController {
         }
     }
 
+    /*
+    Obtener asistente parvulo por id
+    Acceso solo a parvularia y asistente de parvulo
+     */
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('"+RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<AsistenteParvuloDTO> getAsistenteParvuloById(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para obtener asistente parvulo por id {}", id);
         try {

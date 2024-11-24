@@ -26,7 +26,7 @@ public class AsistenciaController {
 
 
     @PostMapping("/actividad/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<List<AsistenciaDTO>> registrarAsistencia(@NonNull @PathVariable Long id , @NonNull @RequestBody List<AsistenciaDTO> asistenciaDTOList){
         LOGGER.info("Request recibida para registrar asistencia");
         try {
@@ -40,8 +40,13 @@ public class AsistenciaController {
 
     }
 
+    /*
+    Buscar asistencia por id de actividad
+    acceso para parvularia y asistente de parvulo
+     */
+
     @GetMapping("/actividad/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<List<AsistenciaDTO>> getAsistenciaByActividadId(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para buscar asistencia por id de actividad {}", id);
         try {
@@ -54,8 +59,12 @@ public class AsistenciaController {
         }
 
     }
+    /*
+    Buscar asistencia por id de parvulo
+    acceso para parvularia, asistente de parvulo y apoderado
+     */
     @GetMapping("/parvulo/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "') or hasRole('" + RoleConstant.APODERADO + "')")
     public ResponseEntity<List<AsistenciaDTO>> getAsistenciaByParvuloId(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para buscar asistencia por id de parvulo {}", id);
         try {
@@ -69,8 +78,13 @@ public class AsistenciaController {
 
     }
 
+    /*
+    Eliminar asistencia por id
+    acceso solo para parvularia y asistente de parvulo
+     */
+
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<Void> deleteAsistencia(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para eliminar asistencia por id {}", id);
         try {

@@ -27,10 +27,13 @@ public class ApoderadoController {
     private final ApoderadoService apoderadoService;
 
 
-
+    /*
+    Actualizar apoderado
+    Acceso solo a parvularia,
+     */
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.APODERADO + "')")
     public ResponseEntity<ApoderadoDTO> updateApoderado(@NonNull @PathVariable Long id, @NonNull @Valid @RequestBody final ApoderadoDTO apoderadoDTO){
         LOGGER.info("Request recibida con id {}", id);
         try {
@@ -42,6 +45,11 @@ public class ApoderadoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /*
+    Eliminar apoderado
+    Acceso solo a parvularia
+     */
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
@@ -57,8 +65,13 @@ public class ApoderadoController {
         }
     }
 
+    /*
+    Obtener apoderado por id
+    Acceso a parvularia, apoderado y asistente parvulo
+     */
+
     @GetMapping("/id/{id}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.APODERADO + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<ApoderadoDTO> getApoderadoById(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para obtener apoderado por id {}", id);
         try {
@@ -70,8 +83,13 @@ public class ApoderadoController {
         }
     }
 
+    /*
+    Obtener apoderado por rut
+    Acceso solo a parvularia, asistente parvulo
+     */
+
     @GetMapping("/rut/{rut}")
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<ApoderadoDTO> getApoderadoByRut(@NonNull @PathVariable String rut){
         LOGGER.info("Request recibida para obtener apoderado por rut {}", rut);
         try {
@@ -83,8 +101,13 @@ public class ApoderadoController {
         }
     }
 
+    /*
+    Obtener todos los apoderados
+    Acceso solo a parvularia y asistente
+     */
+
     @GetMapping
-    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('"+RoleConstant.ASISTENTE_PARVULO+"')")
     public ResponseEntity<List<ApoderadoDTO>> getApoderados(){
         LOGGER.info("Request recibida para obtener todos los apoderados");
         try {
