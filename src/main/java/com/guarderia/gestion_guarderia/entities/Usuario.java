@@ -5,8 +5,15 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
+/*
+La clase usuario se implementa de UserDetails para poder ser utilizada por Spring Security.
+Se utiliza la anotacion @Inheritance para indicar que se va a utilizar una estrategia de herencia.
+ */
 
 
 @Entity
@@ -14,8 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-
-public abstract class Usuario {
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,4 +47,33 @@ public abstract class Usuario {
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Token> tokens;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return rol.getAuthorities();
+    }
+
+    @Override
+    public String getUsername() {
+        return rut;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
