@@ -17,27 +17,17 @@ import static com.guarderia.gestion_guarderia.utils.enums.Permission.*;
 public enum Rol {
 PARVULARIA(Set.of(Permission.values())),
     ASISTENTE_PARVULO(Set.of(
-            ACTIVIDAD_READ,
-            ASISTENCIA_READ,
-            ASISTENCIA_REGISTRAR,
-            ASISTENCIA_UPDATE,
-            ASISTENCIA_DELETE,
-            FOTO_UPLOAD,
-            FOTO_READ,
-            FOTO_DELETE,
-            FOTO_DOWNLOAD,
-            PARVULARIA_READ,
+
             ASISTENTE_PARVULO_READ,
+            ASISTENTE_PARVULO_CREATE,
             ASISTENTE_PARVULO_UPDATE,
-            PARVULO_READ,
-            APODERADO_READ
+            ASISTENTE_PARVULO_DELETE
     )),
     APODERADO(Set.of(
-            ACTIVIDAD_READ,
-            ASISTENCIA_READ,
-            FOTO_READ,
-            PARVULO_READ,
-            APODERADO_READ
+           APODERADO_READ,
+            APODERADO_CREATE,
+            APODERADO_UPDATE,
+            APODERADO_DELETE
     ) );
 
     @Getter
