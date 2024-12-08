@@ -1,16 +1,14 @@
 package com.guarderia.gestion_guarderia.service.impl;
 
 import com.guarderia.gestion_guarderia.dto.ApoderadoDTO;
-import com.guarderia.gestion_guarderia.dto.ParvuloDTO;
 import com.guarderia.gestion_guarderia.entities.Apoderado;
 import com.guarderia.gestion_guarderia.entities.Parvulo;
-import com.guarderia.gestion_guarderia.entities.Rol;
+import com.guarderia.gestion_guarderia.utils.enums.Rol;
 import com.guarderia.gestion_guarderia.exception.InternalServerErrorExeption;
 import com.guarderia.gestion_guarderia.exception.NotFoundExeption;
 import com.guarderia.gestion_guarderia.repository.ApoderadoRepository;
 import com.guarderia.gestion_guarderia.repository.ParvuloRepository;
 import com.guarderia.gestion_guarderia.service.ApoderadoService;
-import com.guarderia.gestion_guarderia.service.ParvuloService;
 import com.guarderia.gestion_guarderia.utils.PasswordGenerator;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -31,25 +29,9 @@ public class ApoderadoServiceImpl implements ApoderadoService {
     private final ParvuloRepository parvuloRepository;
     private final ModelMapper modelMapper;
 
-    @Override
-    @Transactional
-    public ApoderadoDTO createApoderado(@NonNull ApoderadoDTO apoderadoDTO) {
-        LOGGER.info("Creando apoderado");
-        try {
-            Apoderado apoderado = convertToEntity(apoderadoDTO);
-            apoderado.setRol(Rol.APODERADO);
-            apoderado.setPassword(PasswordGenerator.generatePassword(apoderadoDTO.getNombre(), apoderadoDTO.getRut()));
-            apoderado = apoderadoRepository.save(apoderado);
-            LOGGER.info("Apoderado creado con id {}", apoderado.getId());
-            return convertToDto(apoderado);
 
-        } catch (Exception e) {
-            LOGGER.error("Error al crear apoderado");
-            throw new InternalServerErrorExeption("Error al crear apoderado");
 
-        }
 
-    }
 
     @Override
     @Transactional

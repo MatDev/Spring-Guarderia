@@ -2,6 +2,7 @@ package com.guarderia.gestion_guarderia.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.guarderia.gestion_guarderia.utils.enums.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,5 @@ public abstract class UsuarioDTO {
     @JsonIgnore
     private String password;
 
-    private String rol;  // Representado como String para el enum
+    private Rol rol; // Representado como String para el enum
 }

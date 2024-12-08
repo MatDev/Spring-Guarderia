@@ -6,6 +6,7 @@ import com.guarderia.gestion_guarderia.exception.NotFoundExeption;
 import com.guarderia.gestion_guarderia.service.ApoderadoService;
 import com.guarderia.gestion_guarderia.service.ParvuloService;
 import com.guarderia.gestion_guarderia.utils.constant.ApiConstantEndpoint;
+import com.guarderia.gestion_guarderia.utils.constant.RoleConstant;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,20 +26,14 @@ public class ApoderadoController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApoderadoController.class);
     private final ApoderadoService apoderadoService;
 
-    @PostMapping("/create")
-    public ResponseEntity<ApoderadoDTO> createApoderado(@NonNull @Valid @RequestBody final ApoderadoDTO apoderadoDTO){
-        LOGGER.info("Request recibida para crear apoderado");
-        try {
-            ApoderadoDTO apoderadoDTO1=apoderadoService.createApoderado(apoderadoDTO);
-            LOGGER.info("Apoderado creado con id {}", apoderadoDTO1.getId());
-            return ResponseEntity.status(HttpStatus.CREATED).body(apoderadoDTO1);
-        }catch (IllegalArgumentException e){
-            LOGGER.warn("Datos de apoderado invalidos {}",e.getMessage() );
-            return ResponseEntity.badRequest().build();
-        }
-    }
+
+    /*
+    Actualizar apoderado
+    Acceso solo a parvularia,
+     */
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.APODERADO + "')")
     public ResponseEntity<ApoderadoDTO> updateApoderado(@NonNull @PathVariable Long id, @NonNull @Valid @RequestBody final ApoderadoDTO apoderadoDTO){
         LOGGER.info("Request recibida con id {}", id);
         try {
@@ -50,7 +46,13 @@ public class ApoderadoController {
         }
     }
 
+    /*
+    Eliminar apoderado
+    Acceso solo a parvularia
+     */
+
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<Void> deleteApoderado(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para eliminar apoderado por id {}", id);
         try {
@@ -63,7 +65,13 @@ public class ApoderadoController {
         }
     }
 
+    /*
+    Obtener apoderado por id
+    Acceso a parvularia, apoderado y asistente parvulo
+     */
+
     @GetMapping("/id/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.APODERADO + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<ApoderadoDTO> getApoderadoById(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para obtener apoderado por id {}", id);
         try {
@@ -75,7 +83,13 @@ public class ApoderadoController {
         }
     }
 
+    /*
+    Obtener apoderado por rut
+    Acceso solo a parvularia, asistente parvulo
+     */
+
     @GetMapping("/rut/{rut}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<ApoderadoDTO> getApoderadoByRut(@NonNull @PathVariable String rut){
         LOGGER.info("Request recibida para obtener apoderado por rut {}", rut);
         try {
@@ -87,7 +101,13 @@ public class ApoderadoController {
         }
     }
 
+    /*
+    Obtener todos los apoderados
+    Acceso solo a parvularia y asistente
+     */
+
     @GetMapping
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('"+RoleConstant.ASISTENTE_PARVULO+"')")
     public ResponseEntity<List<ApoderadoDTO>> getApoderados(){
         LOGGER.info("Request recibida para obtener todos los apoderados");
         try {

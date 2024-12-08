@@ -3,7 +3,7 @@ package com.guarderia.gestion_guarderia.service.impl;
 import com.guarderia.gestion_guarderia.dto.ParvulariaDTO;
 import com.guarderia.gestion_guarderia.entities.Parvularia;
 
-import com.guarderia.gestion_guarderia.entities.Rol;
+import com.guarderia.gestion_guarderia.utils.enums.Rol;
 import com.guarderia.gestion_guarderia.exception.InternalServerErrorExeption;
 import com.guarderia.gestion_guarderia.exception.NotFoundExeption;
 import com.guarderia.gestion_guarderia.repository.ParvulariaRepository;
@@ -30,23 +30,7 @@ public class ParvulariaServiceImpl implements ParvulariaService {
 
 
     public static final Logger LOGGER = LoggerFactory.getLogger(ParvulariaServiceImpl.class);
-    @Override
-    @Transactional
-    public ParvulariaDTO createParvularia(@NonNull ParvulariaDTO parvulariaDTO){
-        LOGGER.info("Creando parvularia con password {}", parvulariaDTO.getPassword());
-        Parvularia parvularia = convertToEntity(parvulariaDTO);
-        parvularia.setPassword(PasswordGenerator.generatePassword(parvulariaDTO.getNombre(), parvulariaDTO.getRut()));
-        parvularia.setRol(Rol.PARVULARIA);
-        try {
-            parvularia = parvulariaRepository.save(parvularia);
-            LOGGER.info("Parvularia creada con id {}", parvularia.getId());
-            return convertToDto(parvularia);
-        }catch (Exception e){
-            LOGGER.error("Error al crear parvularia");
-            throw new InternalServerErrorExeption("Error al crear parvularia");
-        }
 
-    }
     @Override
     @Transactional
     public ParvulariaDTO updateParvularia(@NonNull Long id, @NonNull ParvulariaDTO parvulariaDTO){

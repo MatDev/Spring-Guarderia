@@ -14,5 +14,9 @@ public class ApiConstantEndpoint {
     public static final String API_ACTIVIDAD = API_VERSION + "/actividad";
     public static final String API_ASISTENCIA = API_VERSION + "/asistencia";
     public static final String API_FOTO = API_VERSION + "/foto";
-
+    public static final String API_USER = API_VERSION + "/user";
+    public static final String API_AUTH = API_VERSION + "/auth";
+    public static final String API_LOGOUT = API_AUTH + "/logout";
+    public static final String ENDPOINT_ACTUATOR = "/actuator";
+    public static final String ENDPOINT_ACTUATOR_PATTERN = ENDPOINT_ACTUATOR + "/**";
 }

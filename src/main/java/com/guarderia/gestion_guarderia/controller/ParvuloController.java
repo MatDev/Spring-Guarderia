@@ -5,6 +5,7 @@ import com.guarderia.gestion_guarderia.dto.ParvuloDTO;
 import com.guarderia.gestion_guarderia.exception.NotFoundExeption;
 import com.guarderia.gestion_guarderia.service.ParvuloService;
 import com.guarderia.gestion_guarderia.utils.constant.ApiConstantEndpoint;
+import com.guarderia.gestion_guarderia.utils.constant.RoleConstant;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,30 +25,28 @@ public class ParvuloController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ParvuloController.class);
     private final ParvuloService parvuloService;
 
+
+    /*
+    Listar todos los parvulos y asistentes de parvulo
+
+     */
     @GetMapping
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('"+RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<List<ParvuloDTO>> getAllParvulos(){
         LOGGER.info("Reques recibida para obtener todos los parvulos");
         List<ParvuloDTO> parvuloDTOList=parvuloService.getAllParvulos();
         return ResponseEntity.ok(parvuloDTOList);
     }
 
-    @PostMapping
-    public ResponseEntity<ParvuloDTO> createParvulo(@NonNull @Valid @RequestBody final ParvuloDTO parvuloDTO){
-        LOGGER.info("Creando parvulo");
-       try {
 
-           ParvuloDTO parvuloDTO1=parvuloService.createParvulo(parvuloDTO);
-           LOGGER.info("Parvulo creado con id {}", parvuloDTO1.getId());
 
-           return ResponseEntity.status(HttpStatus.CREATED).body(parvuloDTO1);
-
-       } catch (IllegalArgumentException e) {
-           LOGGER.warn("Datos de parvulos invalidos {}",e.getMessage() );
-              return ResponseEntity.badRequest().build();
-       }
-    }
+    /*
+    Obtener parvulo por id
+    Acceso solo a parvularia y asistente de parvulo
+     */
 
     @GetMapping("/id/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('"+RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<ParvuloDTO> getParvuloById(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para obtener parvulo por id {}", id);
         try {
@@ -58,7 +58,13 @@ public class ParvuloController {
         }
     }
 
+    /*
+     obtener parvulo por rut
+        Acceso solo a parvularia y asistente de parvulo
+     */
+
     @GetMapping("/rut/{rut}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('"+RoleConstant.ASISTENTE_PARVULO + "')")
     public ResponseEntity<ParvuloDTO> getParvuloByRut(@NonNull @PathVariable String rut){
         LOGGER.info("Request recibida para obtener parvulo por rut {}", rut);
         try {
@@ -69,8 +75,12 @@ public class ParvuloController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    /*
+    Actualizar parvulo
+    Acceso solo a parvularia y apoderado
+     */
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "') or hasRole('" + RoleConstant.APODERADO + "')")
     public ResponseEntity<ParvuloDTO> updateParvulo(@NonNull @PathVariable Long id, @NonNull @Valid @RequestBody final ParvuloDTO parvuloDTO){
         LOGGER.info("Request recibida para actualizar parvulo con id {}", id);
         try {
@@ -82,7 +92,13 @@ public class ParvuloController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /*
+    Eliminar parvulo
+    Acceso solo a parvularia
+     */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('" + RoleConstant.PARVULARIA + "')")
     public ResponseEntity<Void> deleteParvulo(@NonNull @PathVariable Long id){
         LOGGER.info("Request recibida para eliminar parvulo por id {}", id);
         try {
