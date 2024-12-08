@@ -1,5 +1,4 @@
 package com.guarderia.gestion_guarderia.service.impl;
-
 import com.guarderia.gestion_guarderia.dto.*;
 import com.guarderia.gestion_guarderia.entities.*;
 import com.guarderia.gestion_guarderia.exception.InternalServerErrorExeption;
@@ -8,9 +7,6 @@ import com.guarderia.gestion_guarderia.repository.ApoderadoRepository;
 import com.guarderia.gestion_guarderia.repository.AsistenteParvuloRepository;
 import com.guarderia.gestion_guarderia.repository.ParvulariaRepository;
 import com.guarderia.gestion_guarderia.repository.ParvuloRepository;
-import com.guarderia.gestion_guarderia.service.ApoderadoService;
-import com.guarderia.gestion_guarderia.service.AsistenteParvuloService;
-import com.guarderia.gestion_guarderia.service.ParvulariaService;
 import com.guarderia.gestion_guarderia.service.UserService;
 import com.guarderia.gestion_guarderia.utils.PasswordGenerator;
 import com.guarderia.gestion_guarderia.utils.enums.Rol;
@@ -19,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final ApoderadoRepository apoderadoRepository;
     private final AsistenteParvuloRepository asistenteParvuloRepository;
     private final ParvuloRepository parvuloRepository;
+    private final PasswordEncoder passwordEncoder;
     public static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
@@ -102,7 +100,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private String generatePassword(String nombre, String rut) {
-        return PasswordGenerator.generatePassword(nombre, rut);
+        return passwordEncoder.encode(PasswordGenerator.generatePassword(nombre, rut));
     }
 
     private Parvularia convertToEntity(ParvulariaDTO parvulariaDTO) {
