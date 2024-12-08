@@ -4,7 +4,7 @@ import com.guarderia.gestion_guarderia.exception.ExpiredTokenException;
 import com.guarderia.gestion_guarderia.exception.InvalidTokenException;
 import com.guarderia.gestion_guarderia.repository.TokenRepository;
 import com.guarderia.gestion_guarderia.security.service.JwtService;
-import com.guarderia.gestion_guarderia.service.UserService;
+
 import com.guarderia.gestion_guarderia.utils.constant.ApiConstantEndpoint;
 import com.guarderia.gestion_guarderia.utils.constant.AuthConstant;
 import jakarta.servlet.FilterChain;
@@ -12,7 +12,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+
 import org.slf4j.Logger;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,13 +36,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final TokenRepository tokenRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        LOGGER.info("Procesando Reques : {}",request.getServletPath());
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+        LOGGER.debug("Procesando Request : {}",request.getServletPath());
         if(isAuthPath(request)){
           LOGGER.debug("Saltar la autenticación JWT para la ruta de autenticación");
           filterChain.doFilter(request,response);
             return;
         }
+        LOGGER.debug("Procesando autenticación JWT para la ruta: {}",request.getServletPath());
         final String AuthHeader=request.getHeader(AuthConstant.AUTHORIZATION_HEADER);
         if(isInvalidAuthHeader(AuthHeader)){
             LOGGER.warn("Cabecera de autorización no válida, procediendo al filtro de autorizacion");
@@ -75,7 +80,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 
     private boolean isAuthPath(HttpServletRequest request) {
-            return request.getServletPath().equals(ApiConstantEndpoint.API_AUTH+"/login");
+            return request.getServletPath().equals(ApiConstantEndpoint.API_AUTH + "/login");
             /*
             Se puede añadir registro pero, para este caso la unica que puede registrar usuarios es la parvularia
             porlotanto no es necesario
