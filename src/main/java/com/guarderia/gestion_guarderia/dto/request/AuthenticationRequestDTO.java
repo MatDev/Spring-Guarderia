@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticationRequestDTO {
 
-    private String Rut;
+    private String rut;
     String password;
 }
