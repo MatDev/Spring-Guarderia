@@ -92,11 +92,13 @@ public class JwtService {
         LOGGER.info("Generando token");
         Map<String,Object> claims = new HashMap<>();
         claims.put(AuthConstant.ROLE_CLAIM,userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).findFirst().orElseThrow(()->
+                .map(GrantedAuthority::getAuthority)
+                .findFirst().orElseThrow(()->
                 {
                     LOGGER.warn("No se encontro rol en el usuario");
                     return new RuntimeException("No se encontro rol en el usuario");
                 }));
+
         return generateToken(claims,userDetails);
     }
 
@@ -110,7 +112,10 @@ public class JwtService {
 
     public String generateToken(Map<String,Object> extraClaims, UserDetails userDetails){
         LOGGER.info("Generando token con claims adicionales");
-        return  buildToken(extraClaims,userDetails,jwtExpiration);
+        String token = buildToken(extraClaims,userDetails,jwtExpiration);
+        LOGGER.info("Token generado");
+
+        return  token;
 
     }
 
