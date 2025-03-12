@@ -177,4 +177,5 @@ El proyecto de gestión de guardería ha sido diseñado y desarrollado siguiendo
 - Documentacion con Swagger 
 - Creacion de Pruebas 
 - Validar el manejo de archivos
+- Creacion de pipeline con github actions para creacion de contendor , pruebas y despliegue
 
