@@ -1,5 +1,5 @@
 version: "3.8"
-
+# Base de datos y pgadmin para gestionar la base de datos
 services:
   postgres:
     image: postgres
