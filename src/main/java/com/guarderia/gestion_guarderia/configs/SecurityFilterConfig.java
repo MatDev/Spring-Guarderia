@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -34,7 +34,6 @@ public class SecurityFilterConfig {
             ApiConstantEndpoint.API_AUTH+"/login",
             ApiConstantEndpoint.ENDPOINT_ACTUATOR_PATTERN,
 
-
     };
 
     @Bean
@@ -44,10 +43,17 @@ public class SecurityFilterConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req->
                                 req
+                                        //URLS PUBLICAS
                                         .requestMatchers(WHITE_LIST_URL).permitAll()
                                         .requestMatchers(SwaggerConstant.SWAGGER_WHITE_LIST_URL).permitAll()
-                                        .requestMatchers(POST,ApiConstantEndpoint.API_USER+"/**").hasAnyRole(RoleConstant.PARVULARIA)
-
+                                        //apoderado solo puede ver actividades y asistencias de sus hijos
+                                        .requestMatchers(GET,ApiConstantEndpoint.API_ACTIVIDAD+"/**").hasAnyRole(RoleConstant.APODERADO)
+                                        .requestMatchers(GET,ApiConstantEndpoint.API_ASISTENCIA+"/parvulo/**").hasAnyRole(RoleConstant.APODERADO)
+                                        //parvularia Acceso completo
+                                        .requestMatchers("/**").hasAnyRole(RoleConstant.PARVULARIA)
+                                        //asistente parvulo
+                                        .requestMatchers(GET , ApiConstantEndpoint.API_ACTIVIDAD + "/**").hasAnyRole(RoleConstant.ASISTENTE_PARVULO)
+                                        .requestMatchers(GET ,ApiConstantEndpoint.API_ASISTENCIA+"/**").hasAnyRole(RoleConstant.ASISTENTE_PARVULO)
                                         .anyRequest().authenticated()
 
 
@@ -64,3 +70,8 @@ public class SecurityFilterConfig {
         return httpSecurity.build();
     }
 }
+/*solo se puede acceder a las rutas de login y actuator sin autenticacion
+* se puede acceder a las rutas de swagger sin autenticacion
+* solo se puede acceder a las rutas de usuario con el rol de parvularia
+* solo la parvularia puede acceder a las rutas de
+ */
