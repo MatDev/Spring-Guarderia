@@ -3,6 +3,7 @@ package com.guarderia.gestion_guarderia.configs;
 import com.guarderia.gestion_guarderia.security.filter.JwtAuthFilter;
 import com.guarderia.gestion_guarderia.utils.constant.ApiConstantEndpoint;
 import com.guarderia.gestion_guarderia.utils.constant.RoleConstant;
+import com.guarderia.gestion_guarderia.utils.constant.SwaggerConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.cors.CorsConfigurationSource;
+
 
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -30,8 +32,11 @@ public class SecurityFilterConfig {
 
     private static final String[] WHITE_LIST_URL = {
             ApiConstantEndpoint.API_AUTH+"/login",
-            ApiConstantEndpoint.ENDPOINT_ACTUATOR_PATTERN
+            ApiConstantEndpoint.ENDPOINT_ACTUATOR_PATTERN,
+
+
     };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.cors(
@@ -40,6 +45,7 @@ public class SecurityFilterConfig {
                 .authorizeHttpRequests(req->
                                 req
                                         .requestMatchers(WHITE_LIST_URL).permitAll()
+                                        .requestMatchers(SwaggerConstant.SWAGGER_WHITE_LIST_URL).permitAll()
                                         .requestMatchers(POST,ApiConstantEndpoint.API_USER+"/**").hasAnyRole(RoleConstant.PARVULARIA)
 
                                         .anyRequest().authenticated()
