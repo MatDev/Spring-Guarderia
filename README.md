@@ -176,10 +176,11 @@ El proyecto de gestión de guardería ha sido diseñado y desarrollado siguiendo
 - Swagger es un conjunto de herramientas que facilita la documentación y prueba de APIs. Al integrarlo en la aplicacion, se puede generar automáticamente una interfaz interactiva que permite explorar y probar los endpoints.
   
 ### 10. Dockerizacion
+>[!TIP]
+>Se creo un actions para la contruccion y publicacion de la imagen.
 - Dockerizar la aplicación permite empaquetarla junto con todas sus dependencias en un contenedor, garantizando que se ejecute de manera consistente en cualquier entorno.
 
->[TIP]
->Se creo un actions para la contruccion y publicacion de la imagen.
+
 
 ## Pendientes
 >[!WARNING]
