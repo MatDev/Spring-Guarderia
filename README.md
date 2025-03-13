@@ -178,10 +178,13 @@ El proyecto de gestión de guardería ha sido diseñado y desarrollado siguiendo
 ### 10. Dockerizacion
 - Dockerizar la aplicación permite empaquetarla junto con todas sus dependencias en un contenedor, garantizando que se ejecute de manera consistente en cualquier entorno.
 
+  >[TIP]
+  >Se creo un actions para la contruccion y publicacion de la imagen.
+
 ## Pendientes
 >[!WARNING]
 >Solo hay algunas rutas protegidas con el fin de ver que funciones el securityfilterchain
 - Creacion de Pruebas 
 - Validar el manejo de archivos
-- Creacion de pipeline con github actions para creacion de contendor , pruebas y despliegue
+- Creacion de pipeline con github actions para creacion de contendor (Listo) , pruebas (futuro: Jmeter o Jacoco) y despliegue (EC2).
 
