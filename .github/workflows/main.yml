@@ -2,7 +2,7 @@ name: simple pipeline creacion de contenedores
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
