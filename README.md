@@ -171,10 +171,10 @@ El proyecto de gestión de guardería ha sido diseñado y desarrollado siguiendo
 
 - Configuración flexible de CORS para permitir accesos seguros desde múltiples dominios.
 ### 9. Uso de Swagger
+>[!WARNING]
+>Se implemento swagger, no obstante no se valido la prueba de los endpoints a travez de este.
 - Swagger es un conjunto de herramientas que facilita la documentación y prueba de APIs. Al integrarlo en la aplicacion, se puede generar automáticamente una interfaz interactiva que permite explorar y probar los endpoints.
   
-  >[!WARNING]
-  >Se implemento swagger, no obstante no se valido la prueba de los endpoints a travez de este.
 ### 10. Dockerizacion
 - Dockerizar la aplicación permite empaquetarla junto con todas sus dependencias en un contenedor, garantizando que se ejecute de manera consistente en cualquier entorno.
 
