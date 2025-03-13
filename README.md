@@ -178,8 +178,8 @@ El proyecto de gestión de guardería ha sido diseñado y desarrollado siguiendo
 ### 10. Dockerizacion
 - Dockerizar la aplicación permite empaquetarla junto con todas sus dependencias en un contenedor, garantizando que se ejecute de manera consistente en cualquier entorno.
 
-  >[TIP]
-  >Se creo un actions para la contruccion y publicacion de la imagen.
+>[TIP]
+>Se creo un actions para la contruccion y publicacion de la imagen.
 
 ## Pendientes
 >[!WARNING]
